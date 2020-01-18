@@ -2,13 +2,23 @@
 {/* eslint-disable */ }
 import React from 'react';
 
-function TaskItem() {
+function TaskItem(props) {
+    const { index, id, name, isFinished } = props
+    const onUpdateStatus = () => props.onUpdateStatus(id)
     return (
         <tr>
-            <td className="text-center"><h5>1</h5></td>
-            <td><h5>Học lập trình</h5></td>
             <td className="text-center">
-                <h5><span className="label label-success">Activated</span></h5>
+                <h5>{index + 1}</h5>
+            </td>
+            <td>
+                <h5>{name}</h5>
+            </td>
+            <td className="text-center">
+                <h5 onClick={onUpdateStatus}>
+                    {isFinished
+                        ? <span className="label label-success">Finished</span>
+                        : <span className="label label-danger">Unfinished</span>}
+                </h5>
             </td>
             <td className="text-center" nowrap="nowrap">
                 <button type="button" className="btn btn-info">

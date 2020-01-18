@@ -20,8 +20,8 @@ function Sort() {
                     </a>
                 </li>
                 <li role="separator" className="divider"></li>
-                <li><a role="button">Activated</a></li>
-                <li><a role="button">Deactivated</a></li>
+                <li><a role="button">Finished</a></li>
+                <li><a role="button">Unfinished</a></li>
             </ul>
         </div>
     );

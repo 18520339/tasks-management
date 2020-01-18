@@ -1,15 +1,16 @@
 // eslint-disable-next-line
 {/* eslint-disable */ }
 import React from 'react';
-import TaskItem from './TaskItem';
+import TaskItem from './../TaskItem';
 
-function TaskList() {
+function TaskList(props) {
+    const { tasks, onUpdateStatus } = props
     return (
         <table className="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th className="text-center">Num</th>
-                    <th className="text-center">Task Name</th>
+                    <th className="text-center">Id</th>
+                    <th className="text-center">Task name</th>
                     <th className="text-center">Status</th>
                     <th className="text-center">Actions</th>
                 </tr>
@@ -21,19 +22,28 @@ function TaskList() {
                     <td>
                         <select className="form-control">
                             <option value="-1">All</option>
-                            <option value="0">Activated</option>
-                            <option value="1">Deactivated</option>
+                            <option value="0">Finished</option>
+                            <option value="1">Unfinished</option>
                         </select>
                     </td>
                     <td className="text-center">
                         <button type="button" className="btn btn-warning">
-                            <i className="far fa-calendar-times"></i>&nbsp; Delete All Tasks
+                            <i className="fas fa-exchange-alt"></i>&nbsp; Change theme
                          </button>
                     </td>
                 </tr>
-                <TaskItem />
-                <TaskItem />
-                <TaskItem />
+                {tasks.map((task, index) => {
+                    return (
+                        <TaskItem
+                            key={index}
+                            index={index}
+                            id={task.id}
+                            name={task.name}
+                            isFinished={task.status}
+                            onUpdateStatus={onUpdateStatus}
+                        />
+                    )
+                })}
             </tbody>
         </table>
     );
