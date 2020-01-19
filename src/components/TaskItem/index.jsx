@@ -5,6 +5,7 @@ import React from 'react';
 function TaskItem(props) {
     const { index, id, name, isFinished } = props
     const onUpdateStatus = () => props.onUpdateStatus(id)
+    const onDeleteTask = () => props.onDeleteTask(id)
     return (
         <tr>
             <td className="text-center">
@@ -24,7 +25,7 @@ function TaskItem(props) {
                 <button type="button" className="btn btn-info">
                     <i className="far fa-edit"></i>&nbsp; Edit
                 </button> &nbsp;
-                <button type="button" className="btn btn-danger">
+                <button type="button" className="btn btn-danger" onClick={onDeleteTask}>
                     <i className="far fa-trash-alt"></i>&nbsp; Delete
                 </button>
             </td>

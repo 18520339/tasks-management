@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
-import { SearchCtrl, SortCtrl } from './components/Controls'
+import { SearchCtrl, SortCtrl } from './components/Controls';
 
 function App() {
 	const [tasks, setTasks] = useState([])
@@ -15,10 +15,12 @@ function App() {
 	const randomHexa = () => Math.floor(Math.random() * 0x10000).toString(16)
 	const generateId = () => [randomHexa(), randomHexa(), randomHexa(), randomHexa(), randomHexa()].join('-')
 
+	const onDeleteAllTasks = () => savedTasks([])
 	const savedTasks = newTasks => {
 		setTasks(newTasks)
 		localStorage.setItem('tasks', JSON.stringify(newTasks))
 	}
+
 	const onGenerateTasks = () => {
 		var randomTasks = [
 			{ id: generateId(), name: 'Mua xe', status: true },
@@ -31,20 +33,25 @@ function App() {
 		]
 		savedTasks([...tasks, ...randomTasks])
 	}
-	const onDeleteAllTasks = () => {
-		savedTasks([])
-	}
+
 	const onSubmitForm = newTask => {
 		newTask.id = generateId()
 		savedTasks([...tasks, newTask])
 	}
+
 	const onUpdateStatus = id => {
-		var newTasks = [...tasks]
-		var index = newTasks.findIndex(task => task.id == id)
-		if (index != -1)
-			newTasks[index].status = !newTasks[index].status
-		//savedTasks(newTasks)
-		console.log(id)
+		var index = tasks.findIndex(task => task.id == id)
+		if (index != -1) {
+			tasks[index].status = !tasks[index].status
+			savedTasks([...tasks])
+		}
+	}
+	const onDeleteTask = id => {
+		var index = tasks.findIndex(task => task.id == id)
+		if (index != -1) {
+			tasks.splice(index, 1)
+			savedTasks([...tasks])
+		}
 	}
 	useEffect(() => {
 		var tasksInCookies = localStorage.getItem('tasks')
@@ -53,6 +60,7 @@ function App() {
 			setTasks([...tasks, ...tasksInCookies])
 		}
 	}, [])
+
 	return (
 		<div className="container">
 			<div className="text-center">
@@ -88,7 +96,11 @@ function App() {
 					</div>
 					<div className="row"><br />
 						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<TaskList tasks={tasks} onUpdateStatus={onUpdateStatus} />
+							<TaskList
+								tasks={tasks}
+								onUpdateStatus={onUpdateStatus}
+								onDeleteTask={onDeleteTask}
+							/>
 						</div>
 					</div>
 				</div>

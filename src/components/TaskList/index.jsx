@@ -4,7 +4,7 @@ import React from 'react';
 import TaskItem from './../TaskItem';
 
 function TaskList(props) {
-    const { tasks, onUpdateStatus } = props
+    const { tasks, onUpdateStatus, onDeleteTask } = props
     return (
         <table className="table table-bordered table-hover">
             <thead>
@@ -41,6 +41,7 @@ function TaskList(props) {
                             name={task.name}
                             isFinished={task.status}
                             onUpdateStatus={onUpdateStatus}
+                            onDeleteTask={onDeleteTask}
                         />
                     )
                 })}
