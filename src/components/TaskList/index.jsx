@@ -6,7 +6,7 @@ import TaskItem from './../TaskItem';
 function TaskList(props) {
     const { tasks, onUpdateStatus, onDeleteTask } = props
     return (
-        <table className="table table-bordered table-hover">
+        <table className="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th className="text-center">Id</th>

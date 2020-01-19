@@ -23,13 +23,12 @@ function App() {
 
 	const onGenerateTasks = () => {
 		var randomTasks = [
-			{ id: generateId(), name: 'Mua xe', status: true },
-			{ id: generateId(), name: 'Sắm nhà lầu', status: false },
-			{ id: generateId(), name: 'Cưới vợ', status: false },
-			{ id: generateId(), name: 'Sinh con', status: true },
-			{ id: generateId(), name: 'Đẻ cái', status: false },
-			{ id: generateId(), name: 'Có cháu', status: true },
-			{ id: generateId(), name: 'Thức dậy', status: true },
+			{ id: generateId(), name: '1 vợ', status: true },
+			{ id: generateId(), name: '2 con', status: false },
+			{ id: generateId(), name: '3 lầu', status: false },
+			{ id: generateId(), name: '4 bánh', status: true },
+			{ id: generateId(), name: '5 sao', status: false },
+			{ id: generateId(), name: '6 số', status: true },
 		]
 		savedTasks([...tasks, ...randomTasks])
 	}
@@ -46,6 +45,7 @@ function App() {
 			savedTasks([...tasks])
 		}
 	}
+
 	const onDeleteTask = id => {
 		var index = tasks.findIndex(task => task.id == id)
 		if (index != -1) {
@@ -53,6 +53,7 @@ function App() {
 			savedTasks([...tasks])
 		}
 	}
+
 	useEffect(() => {
 		var tasksInCookies = localStorage.getItem('tasks')
 		if (localStorage && tasksInCookies) {
