@@ -27,8 +27,8 @@ function TaskForm(props) {
         if (taskEdited) {
             var { id, name, status } = taskEdited;
             setTask({ ...task, id, name, status });
-        }
-    }, []);
+        } else onClear();
+    }, [taskEdited]);
 
     return (
         <div className="panel panel-primary">
@@ -68,7 +68,17 @@ function TaskForm(props) {
                     <hr />
                     <div className="text-center">
                         <button type="submit" className="btn btn-success">
-                            <i className="fas fa-plus"></i>&nbsp; Add
+                            {task.id == "" ? (
+                                <span>
+                                    <i className="fas fa-plus"></i>
+                                    &nbsp; Add
+                                </span>
+                            ) : (
+                                <span>
+                                    <i className="fas fa-sync-alt"></i>
+                                    &nbsp; Update
+                                </span>
+                            )}
                         </button>
                         &nbsp;
                         <button
@@ -76,7 +86,7 @@ function TaskForm(props) {
                             className="btn btn-danger"
                             onClick={onClear}
                         >
-                            <i className="fas fa-times"></i>&nbsp; Cancel
+                            <i className="fas fa-times"></i>&nbsp; Clear
                         </button>
                     </div>
                 </form>

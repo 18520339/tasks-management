@@ -33,8 +33,8 @@ function TaskList(props) {
                     </td>
                     <td className="text-center">
                         <button type="button" className="btn btn-warning">
-                            <i className="fas fa-exchange-alt">&ensp;</i>
-                            Change theme
+                            <i className="fas fa-exchange-alt"></i>
+                            &nbsp; Change theme
                         </button>
                     </td>
                 </tr>

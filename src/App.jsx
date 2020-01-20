@@ -18,9 +18,14 @@ function App() {
 
     /* ------------------------- Task Form -----------------------*/
 
-    const onToggleForm = () => setIsDisplayForm(!isDisplayForm);
     const onShowForm = () => setIsDisplayForm(true);
     const onCloseForm = () => setIsDisplayForm(false);
+
+    const onToggleForm = () => {
+        if (isDisplayForm && taskEdited) setIsDisplayForm(true);
+        else setIsDisplayForm(!isDisplayForm);
+        setTaskEdited(null);
+    };
 
     const onSubmitForm = newTask => {
         var newTasksList = [...tasks];
@@ -68,6 +73,7 @@ function App() {
     const onDeleteTask = index => {
         if (index != -1) {
             tasks.splice(index, 1);
+            setTaskEdited(null);
             saveTasks([...tasks]);
         }
     };
@@ -110,8 +116,8 @@ function App() {
                         className="btn btn-primary"
                         onClick={onToggleForm}
                     >
-                        <i className="fas fa-plus">&ensp;</i>
-                        Add task
+                        <i className="fas fa-plus"></i>
+                        &nbsp; Add task
                     </button>
                     &nbsp;
                     <button
@@ -119,8 +125,8 @@ function App() {
                         className="btn btn-success"
                         onClick={onGenerateTasks}
                     >
-                        <i className="fas fa-random">&ensp;</i>
-                        Generate tasks
+                        <i className="fas fa-random"></i>
+                        &nbsp; Generate tasks
                     </button>
                     &nbsp;
                     <button
@@ -128,8 +134,8 @@ function App() {
                         className="btn btn-danger"
                         onClick={onDeleteAllTasks}
                     >
-                        <i className="far fa-calendar-times">&ensp;</i>
-                        Delete all tasks
+                        <i className="far fa-calendar-times"></i>
+                        &nbsp; Delete all tasks
                     </button>
                     <div className="row">
                         <br />

@@ -31,7 +31,8 @@ function TaskItem(props) {
                     className="btn btn-info"
                     onClick={onEditTask}
                 >
-                    <i className="far fa-edit">&ensp;</i>Edit
+                    <i className="far fa-edit"></i>
+                    &nbsp; Edit
                 </button>
                 &nbsp;
                 <button
@@ -39,7 +40,8 @@ function TaskItem(props) {
                     className="btn btn-danger"
                     onClick={onDeleteTask}
                 >
-                    <i className="far fa-trash-alt">&ensp;</i>Delete
+                    <i className="far fa-trash-alt"></i>
+                    &nbsp; Delete
                 </button>
             </td>
         </tr>
