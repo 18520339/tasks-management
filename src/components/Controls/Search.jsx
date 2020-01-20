@@ -1,11 +1,16 @@
-// eslint-disable-next-line
-{/* eslint-disable */ }
-import React from 'react';
+/* jshint esversion: 6 */
+/* eslint-disable */
+
+import React from "react";
 
 function Search() {
     return (
         <div className="input-group">
-            <input type="text" className="form-control" placeholder="Type to search ..." />
+            <input
+                type="text"
+                className="form-control"
+                placeholder="Type to search ..."
+            />
             <span className="input-group-btn">
                 <button className="btn btn-primary" type="button">
                     <i className="fas fa-search"></i>
@@ -16,4 +21,4 @@ function Search() {
 }
 
 export default Search;
-{/* eslint-enable */ }
+/* eslint-enable */

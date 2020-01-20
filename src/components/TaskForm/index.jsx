@@ -1,29 +1,40 @@
-// eslint-disable-next-line
-{/* eslint-disable */ }
-import React, { useState } from 'react';
+/* jshint esversion: 6 */
+/* eslint-disable */
+
+import React, { useState, useEffect } from "react";
 
 function TaskForm(props) {
-    const [task, setTask] = useState({ name: '', status: false })
-    const onClose = props.onClose
+    const { taskEdited, onClose } = props;
+    const [task, setTask] = useState({ id: "", name: "", status: false });
+
+    const onClear = () => setTask({ ...task, id: "", name: "", status: false });
     const onChange = event => {
-        var target = event.target
-        var field = target.name
-        var value = field == 'status' ? Boolean(target.value) : target.value
-        setTask({ ...task, [field]: value })
-    }
-    const onClear = () => setTask({ ...task, name: '', status: false })
+        var target = event.target;
+        var field = target.name;
+        var value = field == "status" ? Boolean(target.value) : target.value;
+        setTask({ ...task, [field]: value });
+    };
+
     const onSubmit = event => {
-        event.preventDefault()
-        if (task.name != '') {
-            props.onSubmit(task)
-            onClear()
+        event.preventDefault();
+        if (task.name != "") {
+            props.onSubmitForm(task);
+            onClear();
         }
-    }
+    };
+
+    useEffect(() => {
+        if (taskEdited) {
+            var { id, name, status } = taskEdited;
+            setTask({ ...task, id, name, status });
+        }
+    }, []);
+
     return (
         <div className="panel panel-primary">
             <div className="panel-heading">
                 <h3 className="panel-title">
-                    Add task
+                    {task.id == "" ? "Add task" : "Update task"}
                     <span
                         className="fas fa-times-circle pull-right "
                         role="button"
@@ -58,8 +69,13 @@ function TaskForm(props) {
                     <div className="text-center">
                         <button type="submit" className="btn btn-success">
                             <i className="fas fa-plus"></i>&nbsp; Add
-                        </button> &nbsp;
-                        <button type="button" className="btn btn-danger" onClick={onClear}>
+                        </button>
+                        &nbsp;
+                        <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={onClear}
+                        >
                             <i className="fas fa-times"></i>&nbsp; Cancel
                         </button>
                     </div>
@@ -70,4 +86,4 @@ function TaskForm(props) {
 }
 
 export default TaskForm;
-{/* eslint-enable */ }
+/* eslint-enable */
