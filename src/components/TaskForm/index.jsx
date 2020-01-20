@@ -1,4 +1,4 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 9 */
 /* eslint-disable */
 
 import React, { useState, useEffect } from "react";
@@ -48,17 +48,16 @@ function TaskForm(props) {
                         <label>Task name :</label>
                         <input
                             type="text"
-                            className="form-control"
                             name="name"
+                            className="form-control"
                             value={task.name}
                             onChange={onChange}
                         />
                     </div>
                     <label>Status :</label>
                     <select
-                        className="form-control"
-                        required="required"
                         name="status"
+                        className="form-control"
                         value={task.status}
                         onChange={onChange}
                     >

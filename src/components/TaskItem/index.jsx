@@ -1,13 +1,14 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 9 */
 /* eslint-disable */
 
 import React from "react";
 
 function TaskItem(props) {
-    const { index, name, isFinished } = props;
-    const onUpdateStatus = () => props.onUpdateStatus(index);
-    const onEditTask = () => props.onEditTask(index);
-    const onDeleteTask = () => props.onDeleteTask(index);
+    const { index, id, name, isFinished } = props;
+    const onUpdateStatus = () => props.onUpdateStatus(id);
+    const onEditTask = () => props.onEditTask(id);
+    const onDeleteTask = () => props.onDeleteTask(id);
+    
     return (
         <tr>
             <td className="text-center">

@@ -1,14 +1,16 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 9 */
 /* eslint-disable */
 
 import React, { useState, useEffect } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
-import { SearchCtrl, SortCtrl } from "./components/Controls";
+import { SearchCtrl, SortCtrl } from "./components/TaskControls";
 
 function App() {
     const [tasks, setTasks] = useState([]);
     const [isDisplayForm, setIsDisplayForm] = useState(false);
+    const [keyword, setKeyword] = useState('');
+    const [sortCondition, setSortCondition] = useState({ by: 'name', value: 1 });
     const [taskEdited, setTaskEdited] = useState(null);
 
     const saveTasks = newTasksList => {
@@ -45,7 +47,6 @@ function App() {
     const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
     const generateId = () => [randomId(), randomId(), randomId()].join("-");
 
-    const onDeleteAllTasks = () => saveTasks([]);
     const onGenerateTasks = () => {
         var randomTasks = [
             { id: generateId(), name: "1 vợ", status: true },
@@ -57,20 +58,26 @@ function App() {
         ];
         saveTasks([...tasks, ...randomTasks]);
     };
+    const onDeleteAllTasks = () => saveTasks([]);
 
-    const onUpdateStatus = index => {
+    const onSearch = keyword => setKeyword(keyword);
+    const onSort = sort => setSortCondition({...sortCondition, by: sort.by, value: sort.value});
+
+    const onUpdateStatus = id => {
+        var index = tasks.findIndex(task => task.id == id);
         if (index != -1) {
             tasks[index].status = !tasks[index].status;
             saveTasks([...tasks]);
         }
     };
 
-    const onEditTask = index => {
+    const onEditTask = id => {
+        var index = tasks.findIndex(task => task.id == id);
         setTaskEdited(tasks[index]);
         onShowForm();
     };
-
-    const onDeleteTask = index => {
+    const onDeleteTask = id => {
+        var index = tasks.findIndex(task => task.id == id);
         if (index != -1) {
             tasks.splice(index, 1);
             setTaskEdited(null);
@@ -152,10 +159,10 @@ function App() {
                     </div>
                     <div className="row">
                         <div className="col-xs-7 col-sm-8 col-md-8 col-lg-8">
-                            <SearchCtrl />
+                            <SearchCtrl onSearch={onSearch} />
                         </div>
                         <div className="col-xs-5 col-sm-4 col-md-4 col-lg-4">
-                            <SortCtrl />
+                            <SortCtrl onSort={onSort} />
                         </div>
                     </div>
                     <div className="row">
@@ -163,6 +170,8 @@ function App() {
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <TaskList
                                 tasks={tasks}
+                                keyword={keyword}
+                                sort={sortCondition}
                                 onUpdateStatus={onUpdateStatus}
                                 onEditTask={onEditTask}
                                 onDeleteTask={onDeleteTask}

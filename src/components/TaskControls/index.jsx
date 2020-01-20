@@ -1,4 +1,4 @@
-/* jshint esversion: 6 */
+/* jshint esversion: 9 */
 /* eslint-disable */
 
 export { default as SearchCtrl } from "./Search";
