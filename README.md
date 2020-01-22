@@ -1,1 +1,1 @@
-# Tasks Management using React JS, React Hooks and Redux
+# Tasks Management using React JS and replace Redux by Hooks
