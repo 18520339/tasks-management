@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import { SearchCtrl, SortCtrl } from './components/TaskControls';
@@ -21,7 +21,6 @@ function App(props) {
 	};
 
 	/* ------------------------- Task Form -----------------------*/
-	const { isDisplayForm } = props;
 	const onToggleForm = () => {
 		if (isDisplayForm && taskEdited) setIsDisplayForm(true);
 		else setIsDisplayForm(!isDisplayForm);
@@ -173,14 +172,6 @@ function App(props) {
 	);
 }
 
-const mapStateToProps = state => {
-	return { isDisplayForm: state.isDisplayForm };
-};
-
-const mapDispatchToProps = (dispatch, props) => {
-	return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
 
 /* eslint-enable */

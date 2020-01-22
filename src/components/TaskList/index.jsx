@@ -1,19 +1,12 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import TaskItem from '../TaskItem';
 
 function TaskList(props) {
-	const {
-		tasks,
-		keyword,
-		sort,
-		onUpdateStatus,
-		onEditTask,
-		onDeleteTask
-	} = props;
+	const tasks = useSelector(state => state.tasks);
+	const { keyword, sort, onUpdateStatus, onEditTask, onDeleteTask } = props;
 	const [filter, setFilter] = useState({ name: '', status: -1 });
 
 	const onChange = event => {
@@ -109,12 +102,6 @@ function TaskList(props) {
 	);
 }
 
-const mapStateToProps = state => {
-	return {
-		tasks: state.tasks
-	};
-};
-
-export default connect(mapStateToProps, null)(TaskList);
+export default TaskList;
 
 /* eslint-enable */

@@ -2,7 +2,6 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 function TaskForm(props) {

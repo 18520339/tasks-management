@@ -9,7 +9,7 @@ const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
 const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
 const generateId = () => [randomId(), randomId(), randomId()].join('-');
 
-const tasks = (state = initialState, action) => {
+export default tasks = (state = initialState, action) => {
 	switch (action.type) {
 		case types.SHOW_LIST:
 			return state;
@@ -27,7 +27,5 @@ const tasks = (state = initialState, action) => {
 			return state;
 	}
 };
-
-export default tasks;
 
 /* eslint-enable */
