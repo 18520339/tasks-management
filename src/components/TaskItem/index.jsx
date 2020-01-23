@@ -1,13 +1,26 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from '../../reducers';
+import * as actions from '../../actions';
 
 function TaskItem(props) {
-	const { index, id, name, isFinished } = props;
-	const onUpdateStatus = () => props.onUpdateStatus(id);
-	const onEditTask = () => props.onEditTask(id);
-	const onDeleteTask = () => props.onDeleteTask(id);
+	const store = useContext(StoreContext);
+	const dispatch = {
+		onOpenForm: () => store.dispatch(actions.openForm()),
+		onUpdateStatus: id => store.dispatch(actions.updateStatus(id)),
+		onEditTask: task => store.dispatch(actions.editTask(task)),
+		onDeleteTask: id => store.dispatch(actions.deleteTask(id))
+	};
+
+	const { index, task } = props;
+	const onUpdateStatus = () => dispatch.onUpdateStatus(task.id);
+	const onEditTask = () => {
+		dispatch.onOpenForm();
+		dispatch.onEditTask(task);
+	};
+	const onDeleteTask = () => dispatch.onDeleteTask(task.id);
 
 	return (
 		<tr>
@@ -15,11 +28,11 @@ function TaskItem(props) {
 				<h5>{index + 1}</h5>
 			</td>
 			<td>
-				<h5>{name}</h5>
+				<h5>{task.name}</h5>
 			</td>
 			<td className='text-center'>
 				<h5 onClick={onUpdateStatus}>
-					{isFinished ? (
+					{task.status ? (
 						<span className='label label-success'>Finished</span>
 					) : (
 						<span className='label label-danger'>Unfinished</span>

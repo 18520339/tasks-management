@@ -1,14 +1,21 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
-function TaskForm(props) {
-	const { taskEdited, onClose } = props;
-	const [task, setTask] = useState({ id: '', name: '', status: false });
+function TaskForm() {
+	const store = useContext(StoreContext);
+	const { taskEdited, isDisplayForm } = store.state;
+	const dispatch = {
+		onSubmitForm: task => store.dispatch(actions.submitForm(task)),
+		onCloseForm: () => store.dispatch(actions.closeForm())
+	};
 
-	const onClear = () => setTask({ ...task, id: '', name: '', status: false });
+	const [task, setTask] = useState({ id: '', name: '', status: false });
+	const onClear = () => setTask({ ...task, name: '', status: false });
+
 	const onChange = event => {
 		var target = event.target;
 		var field = target.name;
@@ -18,10 +25,7 @@ function TaskForm(props) {
 
 	const onSubmit = event => {
 		event.preventDefault();
-		if (task.name != '') {
-			props.onAddTask(task);
-			onClear();
-		}
+		dispatch.onSubmitForm(task);
 	};
 
 	useEffect(() => {
@@ -31,6 +35,7 @@ function TaskForm(props) {
 		} else onClear();
 	}, [taskEdited]);
 
+	if (!isDisplayForm) return '';
 	return (
 		<div className='panel panel-primary'>
 			<div className='panel-heading'>
@@ -39,7 +44,7 @@ function TaskForm(props) {
 					<span
 						className='fas fa-times-circle pull-right '
 						role='button'
-						onClick={onClose}
+						onClick={dispatch.onCloseForm}
 					></span>
 				</h3>
 			</div>
@@ -95,16 +100,6 @@ function TaskForm(props) {
 	);
 }
 
-const mapStateToProps = state => {
-	return {};
-};
-
-const mapDispatchToProps = (dispatch, props) => {
-	return {
-		onAddTask: task => dispatch(actions.addTask(task))
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);
+export default TaskForm;
 
 /* eslint-enable */

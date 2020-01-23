@@ -1,19 +1,22 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { StoreContext } from '../../reducers';
 import TaskItem from '../TaskItem';
 
 function TaskList(props) {
-	const tasks = useSelector(state => state.tasks);
-	const { keyword, sort, onUpdateStatus, onEditTask, onDeleteTask } = props;
+	const store = useContext(StoreContext);
+	const { tasks } = store.state;
+
+	const { keyword, sort } = props;
 	const [filter, setFilter] = useState({ name: '', status: -1 });
 
 	const onChange = event => {
 		var target = event.target;
 		var field = target.name;
-		var value =
-			field == 'status' ? +target.value : target.value.toLowerCase();
+		var value = target.value;
+		value = field == 'status' ? +value : value.toLowerCase();
 		setFilter({ ...filter, [field]: value });
 	};
 
@@ -85,16 +88,7 @@ function TaskList(props) {
 					// })
 					.map((task, index) => {
 						return (
-							<TaskItem
-								key={index}
-								index={index}
-								id={task.id}
-								name={task.name}
-								isFinished={task.status}
-								onUpdateStatus={onUpdateStatus}
-								onEditTask={onEditTask}
-								onDeleteTask={onDeleteTask}
-							/>
+							<TaskItem key={task.id} index={index} task={task} />
 						);
 					})}
 			</tbody>

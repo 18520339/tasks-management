@@ -3,8 +3,8 @@
 
 import * as types from '../constants';
 
-const initialState = true;
-export default isDisplayForm = (state = initialState, action) => {
+const initialState = false;
+const isDisplayForm = (state = initialState, action) => {
 	switch (action.type) {
 		case types.OPEN_FORM:
 			return true;
@@ -16,5 +16,7 @@ export default isDisplayForm = (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default isDisplayForm;
 
 /* eslint-enable */

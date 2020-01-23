@@ -3,29 +3,45 @@
 
 import * as types from '../constants';
 
-const tasksInCookies = localStorage.getItem('tasks');
-const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
-
 const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
 const generateId = () => [randomId(), randomId(), randomId()].join('-');
+const tasksInCookies = localStorage.getItem('tasks');
 
-export default tasks = (state = initialState, action) => {
+const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
+const tasks = (state = initialState, action) => {
 	switch (action.type) {
-		case types.SHOW_LIST:
-			return state;
-		case types.ADD_TASK: {
-			var newTask = {
-				id: generateId(),
-				name: action.task.name,
-				status: action.task.status
-			};
-			state.push(newTask);
+		case types.SUBMIT_FORM:
+			const { id, name, status } = action.task;
+			const task = { id, name, status };
+			if (!task.id) {
+				task.id = generateId();
+				state.push(task);
+			} else {
+				var index = state.findIndex(task => task.id == id);
+				state[index] = task;
+			}
 			localStorage.setItem('tasks', JSON.stringify(state));
 			return state;
-		}
+		case types.UPDATE_STATUS:
+			var index = state.findIndex(task => task.id == action.id);
+			if (index != -1) {
+				state[index].status = !state[index].status;
+				localStorage.setItem('tasks', JSON.stringify(state));
+			}
+			return state;
+		case types.DELETE_TASK:
+			var index = state.findIndex(task => task.id == action.id);
+			if (index != -1) {
+				state.splice(index, 1);
+				//setTaskEdited(null);
+				localStorage.setItem('tasks', JSON.stringify(state));
+			}
+			return state;
 		default:
 			return state;
 	}
 };
+
+export default tasks;
 
 /* eslint-enable */

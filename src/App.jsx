@@ -1,49 +1,45 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { StoreContext } from './reducers';
+import * as actions from './actions';
 
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import { SearchCtrl, SortCtrl } from './components/TaskControls';
 
-function App(props) {
+function App() {
+	const store = useContext(StoreContext);
+	const { taskEdited, isDisplayForm } = store.state;
+	const dispatch = {
+		onOpenForm: () => store.dispatch(actions.openForm()),
+		onToggleForm: () => store.dispatch(actions.toggleForm()),
+		onEditTask: task => store.dispatch(actions.editTask(task))
+	};
+
+	const [tasks, setTasks] = useState([]);
 	const [keyword, setKeyword] = useState('');
 	const [sortCondition, setSortCondition] = useState({
 		by: 'name',
 		value: 1
 	});
-	const [taskEdited, setTaskEdited] = useState(null);
 
-	const saveTasks = newTasksList => {
-		setTasks(newTasksList);
-		localStorage.setItem('tasks', JSON.stringify(newTasksList));
-	};
-
-	/* ------------------------- Task Form -----------------------*/
 	const onToggleForm = () => {
-		if (isDisplayForm && taskEdited) setIsDisplayForm(true);
-		else setIsDisplayForm(!isDisplayForm);
-		setTaskEdited(null);
+		if (taskEdited && taskEdited != '') dispatch.onOpenForm();
+		else dispatch.onToggleForm();
+		dispatch.onEditTask({ id: '', name: '', status: false });
 	};
-
-	// const onSubmitForm = newTask => {
-	// 	var newTasksList = [...tasks];
-	// 	if (newTask.id == '') {
-	// 		newTask.id = generateId();
-	// 		newTasksList.push(newTask);
-	// 	} else {
-	// 		var index = newTasksList.findIndex(task => task.id == newTask.id);
-	// 		newTasksList[index] = newTask;
-	// 	}
-	// 	saveTasks(newTasksList);
-	// };
-	/* ---------------------------------------------------------- */
 
 	/* ------------------------- Task List -----------------------*/
 
 	const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
 	const generateId = () => [randomId(), randomId(), randomId()].join('-');
+
+	const saveTasks = newTasksList => {
+		setTasks(newTasksList);
+		localStorage.setItem('tasks', JSON.stringify(newTasksList));
+	};
 
 	const onGenerateTasks = () => {
 		var randomTasks = [
@@ -59,30 +55,10 @@ function App(props) {
 	const onDeleteAllTasks = () => saveTasks([]);
 
 	const onSearch = keyword => setKeyword(keyword);
-	const onSort = sort =>
+	const onSort = sort => {
 		setSortCondition({ ...sortCondition, by: sort.by, value: sort.value });
-
-	const onUpdateStatus = id => {
-		var index = tasks.findIndex(task => task.id == id);
-		if (index != -1) {
-			tasks[index].status = !tasks[index].status;
-			saveTasks([...tasks]);
-		}
 	};
 
-	const onEditTask = id => {
-		var index = tasks.findIndex(task => task.id == id);
-		setTaskEdited(tasks[index]);
-		onShowForm();
-	};
-	const onDeleteTask = id => {
-		var index = tasks.findIndex(task => task.id == id);
-		if (index != -1) {
-			tasks.splice(index, 1);
-			setTaskEdited(null);
-			saveTasks([...tasks]);
-		}
-	};
 	/* ---------------------------------------------------------- */
 
 	return (
@@ -92,15 +68,9 @@ function App(props) {
 				<hr />
 			</div>
 			<div className='row'>
-				{isDisplayForm && (
-					<div className='col-sm-4 col-md-4 col-lg-4 visible-sm-block visible-md-block visible-lg-block'>
-						<TaskForm
-							taskEdited={taskEdited}
-							onShow={onShowForm}
-							onClose={onCloseForm}
-						/>
-					</div>
-				)}
+				<div className='col-sm-4 col-md-4 col-lg-4 visible-sm-block visible-md-block visible-lg-block'>
+					<TaskForm />
+				</div>
 				<div
 					className={
 						isDisplayForm
@@ -136,15 +106,9 @@ function App(props) {
 					</button>
 					<div className='row'>
 						<br />
-						{isDisplayForm && (
-							<div className='col-xs-12 visible-xs-block'>
-								<TaskForm
-									taskEdited={taskEdited}
-									onShow={onShowForm}
-									onClose={onCloseForm}
-								/>
-							</div>
-						)}
+						<div className='col-xs-12 visible-xs-block'>
+							<TaskForm />
+						</div>
 					</div>
 					<div className='row'>
 						<div className='col-xs-7 col-sm-8 col-md-8 col-lg-8'>
@@ -157,13 +121,7 @@ function App(props) {
 					<div className='row'>
 						<br />
 						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<TaskList
-								keyword={keyword}
-								sort={sortCondition}
-								onUpdateStatus={onUpdateStatus}
-								onEditTask={onEditTask}
-								onDeleteTask={onDeleteTask}
-							/>
+							<TaskList keyword={keyword} sort={sortCondition} />
 						</div>
 					</div>
 				</div>
