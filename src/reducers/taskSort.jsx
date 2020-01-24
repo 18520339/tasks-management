@@ -3,11 +3,12 @@
 
 import * as types from '../constants';
 
-const initialState = { id: '', name: '', status: false };
+const initialState = { by: 'name', value: 1 };
 const taskSort = (state = initialState, action) => {
 	switch (action.type) {
 		case types.SORT_TABLE:
-			return action.task;
+			var { by, value } = action;
+			return { by, value };
 		default:
 			return state;
 	}

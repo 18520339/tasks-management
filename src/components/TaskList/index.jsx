@@ -8,7 +8,7 @@ import TaskItem from '../TaskItem';
 
 function TaskList() {
 	const store = useContext(StoreContext);
-	const { tasks, taskFilter, taskSearch } = store.state;
+	const { tasks, taskFilter, taskSearch, taskSort } = store.state;
 	const dispatch = {
 		onFilter: filter => store.dispatch(actions.filterTable(filter))
 	};
@@ -70,7 +70,7 @@ function TaskList() {
 				</tr>
 				{tasks
 					.filter(task => {
-						var taskName = task.name.toLowerCase();
+						var taskName = task.name ? task.name.toLowerCase() : '';
 						var filterName = taskFilter.name.toLowerCase().trim();
 						return taskName.indexOf(filterName) != -1;
 					})
@@ -78,19 +78,18 @@ function TaskList() {
 						if (taskFilter.status == -1) return task;
 						return task.status == Boolean(taskFilter.status);
 					})
-					// .sort((a, b) => {
-					// 	if (sort.by == 'name') {
-					// 		if (a.name > b.name) return sort.value;
-					// 		if (a.name < b.name) return -sort.value;
-					// 		else return 0;
-					// 	} else if (sort.by == 'status') {
-					// 		if (a.status > b.status) return -sort.value;
-					// 		if (a.status < b.status) return sort.value;
-					// 		else return 0;
-					// 	}
-					// })
-					.map((task, taskIndex) => {
-						var index = tasks.findIndex(item => item.id == task.id);
+					.sort((a, b) => {
+						if (taskSort.by == 'name') {
+							if (a.name > b.name) return taskSort.value;
+							if (a.name < b.name) return -taskSort.value;
+							else return 0;
+						} else if (taskSort.by == 'status') {
+							if (a.status > b.status) return -taskSort.value;
+							if (a.status < b.status) return taskSort.value;
+							else return 0;
+						}
+					})
+					.map((task, index) => {
 						return (
 							<TaskItem key={task.id} index={index} task={task} />
 						);

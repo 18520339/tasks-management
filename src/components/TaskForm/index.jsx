@@ -10,7 +10,8 @@ function TaskForm() {
 	const { taskEdited, isDisplayForm } = store.state;
 	const dispatch = {
 		onSubmit: task => store.dispatch(actions.submitForm(task)),
-		onClose: () => store.dispatch(actions.closeForm())
+		onClose: () => store.dispatch(actions.closeForm()),
+		onEdit: task => store.dispatch(actions.editTask(task))
 	};
 
 	const [task, setTask] = useState({ id: '', name: '', status: false });
@@ -26,7 +27,11 @@ function TaskForm() {
 
 	const onSubmit = event => {
 		event.preventDefault();
-		if (task.name.trim()) dispatch.onSubmit(task);
+		if (task.name.trim()) {
+			dispatch.onSubmit(task);
+			dispatch.onEdit({ id: '', name: '', status: false });
+			onClear();
+		}
 	};
 
 	useEffect(() => {

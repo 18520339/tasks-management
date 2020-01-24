@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StoreContext } from './reducers';
 import * as actions from './actions';
+import * as common from './common';
 
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
@@ -11,18 +12,13 @@ import { SearchCtrl, SortCtrl } from './components/TaskControls';
 
 function App() {
 	const store = useContext(StoreContext);
-	const { taskEdited, isDisplayForm } = store.state;
+	const { tasks, taskEdited, isDisplayForm } = store.state;
 	const dispatch = {
 		onOpenForm: () => store.dispatch(actions.openForm()),
 		onToggleForm: () => store.dispatch(actions.toggleForm()),
+		onRandomTasks: tasks => store.dispatch(actions.randomTasks(tasks)),
 		onEditTask: task => store.dispatch(actions.editTask(task))
 	};
-
-	const [tasks, setTasks] = useState([]);
-	const [sortCondition, setSortCondition] = useState({
-		by: 'name',
-		value: 1
-	});
 
 	const onToggleForm = () => {
 		if (taskEdited && taskEdited.id != '') dispatch.onOpenForm();
@@ -30,34 +26,19 @@ function App() {
 		dispatch.onEditTask({ id: '', name: '', status: false });
 	};
 
-	/* ------------------------- Task List -----------------------*/
-
-	const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
-	const generateId = () => [randomId(), randomId(), randomId()].join('-');
-
-	const saveTasks = newTasksList => {
-		setTasks(newTasksList);
-		localStorage.setItem('tasks', JSON.stringify(newTasksList));
-	};
-
 	const onGenerateTasks = () => {
 		var randomTasks = [
-			{ id: generateId(), name: '1 vợ', status: true },
-			{ id: generateId(), name: '2 con', status: false },
-			{ id: generateId(), name: '3 lầu', status: false },
-			{ id: generateId(), name: '4 bánh', status: true },
-			{ id: generateId(), name: '5 sao', status: false },
-			{ id: generateId(), name: '6 số', status: true }
+			{ id: common.generateId(), name: '1 vợ', status: true },
+			{ id: common.generateId(), name: '2 con', status: false },
+			{ id: common.generateId(), name: '3 lầu', status: false },
+			{ id: common.generateId(), name: '4 bánh', status: true },
+			{ id: common.generateId(), name: '5 sao', status: false },
+			{ id: common.generateId(), name: '6 số', status: true }
 		];
-		saveTasks([...tasks, ...randomTasks]);
-	};
-	const onDeleteAllTasks = () => saveTasks([]);
-
-	const onSort = sort => {
-		setSortCondition({ ...sortCondition, by: sort.by, value: sort.value });
+		dispatch.onRandomTasks([...tasks, ...randomTasks]);
 	};
 
-	/* ---------------------------------------------------------- */
+	const onDeleteAllTasks = () => dispatch.onRandomTasks([]);
 
 	return (
 		<div className='container'>
@@ -113,13 +94,13 @@ function App() {
 							<SearchCtrl />
 						</div>
 						<div className='col-xs-5 col-sm-4 col-md-4 col-lg-4'>
-							<SortCtrl onSort={onSort} />
+							<SortCtrl />
 						</div>
 					</div>
 					<div className='row'>
 						<br />
 						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<TaskList sort={sortCondition} />
+							<TaskList />
 						</div>
 					</div>
 				</div>

@@ -7,6 +7,7 @@ export const TOGGLE_FORM = 'TOGGLE_FORM';
 export const SUBMIT_FORM = 'SUBMIT_FORM';
 
 export const UPDATE_STATUS = 'UPDATE_STATUS';
+export const RANDOM_TASKS = 'RANDOM_TASKS';
 export const EDIT_TASK = 'EDIT_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 

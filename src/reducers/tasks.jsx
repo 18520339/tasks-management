@@ -2,11 +2,9 @@
 /* eslint-disable */
 
 import * as types from '../constants';
+import * as common from '../common';
 
-const randomId = () => Math.floor(Math.random() * 0x10000).toString(16);
-const generateId = () => [randomId(), randomId(), randomId()].join('-');
 const tasksInCookies = localStorage.getItem('tasks');
-
 const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
 const tasks = (state = initialState, action) => {
 	switch (action.type) {
@@ -14,7 +12,7 @@ const tasks = (state = initialState, action) => {
 			const { task } = action;
 			task.name = task.name.trim();
 			if (!task.id) {
-				task.id = generateId();
+				task.id = common.generateId();
 				state.push(task);
 			} else {
 				var index = state.findIndex(item => item.id == task.id);
@@ -28,6 +26,10 @@ const tasks = (state = initialState, action) => {
 				state[index].status = !state[index].status;
 				localStorage.setItem('tasks', JSON.stringify(state));
 			}
+			return state;
+		case types.RANDOM_TASKS:
+			state = action.tasks;
+			localStorage.setItem('tasks', JSON.stringify(state));
 			return state;
 		case types.DELETE_TASK:
 			var index = state.findIndex(task => task.id == action.id);

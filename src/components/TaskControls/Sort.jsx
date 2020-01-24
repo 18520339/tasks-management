@@ -1,12 +1,16 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from '../../reducers';
+import * as actions from '../../actions';
 
-function Sort(props) {
-	const [sort, setSort] = useState({ by: 'name', value: 1 });
-	const onSort = (by, value) => setSort({ ...sort, by, value });
-	useEffect(() => props.onSort(sort), [sort]);
+function Sort() {
+	const store = useContext(StoreContext);
+	const { taskSort } = store.state;
+	const dispatch = {
+		onSort: (by, value) => store.dispatch(actions.sortTable(by, value))
+	};
 
 	return (
 		<div className='dropdown'>
@@ -19,39 +23,39 @@ function Sort(props) {
 				Sort by &nbsp;<i className='far fa-caret-square-down'></i>
 			</button>
 			<ul className='dropdown-menu' aria-labelledby='sortMenu'>
-				<li onClick={() => onSort('name', 1)}>
+				<li onClick={() => dispatch.onSort('name', 1)}>
 					<a role='button'>
 						<i className='fas fa-sort-alpha-down'>
 							&emsp; A - Z &emsp;
 						</i>
-						{sort.by == 'name' && sort.value == 1 && (
+						{taskSort.by == 'name' && taskSort.value == 1 && (
 							<i className='fas fa-check'></i>
 						)}
 					</a>
 				</li>
-				<li onClick={() => onSort('name', -1)}>
+				<li onClick={() => dispatch.onSort('name', -1)}>
 					<a role='button'>
 						<i className='fas fa-sort-alpha-down-alt'>
 							&emsp; Z - A &emsp;
 						</i>
-						{sort.by == 'name' && sort.value == -1 && (
+						{taskSort.by == 'name' && taskSort.value == -1 && (
 							<i className='fas fa-check'></i>
 						)}
 					</a>
 				</li>
 				<li role='separator' className='divider'></li>
-				<li onClick={() => onSort('status', 1)}>
+				<li onClick={() => dispatch.onSort('status', 1)}>
 					<a role='button'>
 						Finished &emsp;
-						{sort.by == 'status' && sort.value == 1 && (
+						{taskSort.by == 'status' && taskSort.value == 1 && (
 							<i className='fas fa-check'></i>
 						)}
 					</a>
 				</li>
-				<li onClick={() => onSort('status', -1)}>
+				<li onClick={() => dispatch.onSort('status', -1)}>
 					<a role='button'>
 						Unfinished &emsp;
-						{sort.by == 'status' && sort.value == -1 && (
+						{taskSort.by == 'status' && taskSort.value == -1 && (
 							<i className='fas fa-check'></i>
 						)}
 					</a>

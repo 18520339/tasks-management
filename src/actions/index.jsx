@@ -23,6 +23,10 @@ export const updateStatus = id => {
 	return { type: types.UPDATE_STATUS, id };
 };
 
+export const randomTasks = tasks => {
+	return { type: types.RANDOM_TASKS, tasks };
+};
+
 export const editTask = task => {
 	return { type: types.EDIT_TASK, task };
 };
@@ -39,8 +43,8 @@ export const searchTable = keyword => {
 	return { type: types.SEARCH_TABLE, keyword };
 };
 
-export const sortTable = c => {
-	return { type: types.SORT_TABLE, filter };
+export const sortTable = (by, value) => {
+	return { type: types.SORT_TABLE, by, value };
 };
 
 /* eslint-enable */
