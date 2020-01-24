@@ -19,14 +19,13 @@ function App() {
 	};
 
 	const [tasks, setTasks] = useState([]);
-	const [keyword, setKeyword] = useState('');
 	const [sortCondition, setSortCondition] = useState({
 		by: 'name',
 		value: 1
 	});
 
 	const onToggleForm = () => {
-		if (taskEdited && taskEdited != '') dispatch.onOpenForm();
+		if (taskEdited && taskEdited.id != '') dispatch.onOpenForm();
 		else dispatch.onToggleForm();
 		dispatch.onEditTask({ id: '', name: '', status: false });
 	};
@@ -54,7 +53,6 @@ function App() {
 	};
 	const onDeleteAllTasks = () => saveTasks([]);
 
-	const onSearch = keyword => setKeyword(keyword);
 	const onSort = sort => {
 		setSortCondition({ ...sortCondition, by: sort.by, value: sort.value });
 	};
@@ -112,7 +110,7 @@ function App() {
 					</div>
 					<div className='row'>
 						<div className='col-xs-7 col-sm-8 col-md-8 col-lg-8'>
-							<SearchCtrl onSearch={onSearch} />
+							<SearchCtrl />
 						</div>
 						<div className='col-xs-5 col-sm-4 col-md-4 col-lg-4'>
 							<SortCtrl onSort={onSort} />
@@ -121,7 +119,7 @@ function App() {
 					<div className='row'>
 						<br />
 						<div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-							<TaskList keyword={keyword} sort={sortCondition} />
+							<TaskList sort={sortCondition} />
 						</div>
 					</div>
 				</div>

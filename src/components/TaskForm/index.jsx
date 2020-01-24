@@ -9,8 +9,8 @@ function TaskForm() {
 	const store = useContext(StoreContext);
 	const { taskEdited, isDisplayForm } = store.state;
 	const dispatch = {
-		onSubmitForm: task => store.dispatch(actions.submitForm(task)),
-		onCloseForm: () => store.dispatch(actions.closeForm())
+		onSubmit: task => store.dispatch(actions.submitForm(task)),
+		onClose: () => store.dispatch(actions.closeForm())
 	};
 
 	const [task, setTask] = useState({ id: '', name: '', status: false });
@@ -19,13 +19,14 @@ function TaskForm() {
 	const onChange = event => {
 		var target = event.target;
 		var field = target.name;
-		var value = field == 'status' ? Boolean(target.value) : target.value;
+		var value = target.value;
+		value = field == 'status' ? value == 'true' : value;
 		setTask({ ...task, [field]: value });
 	};
 
 	const onSubmit = event => {
 		event.preventDefault();
-		dispatch.onSubmitForm(task);
+		if (task.name.trim()) dispatch.onSubmit(task);
 	};
 
 	useEffect(() => {
@@ -44,7 +45,7 @@ function TaskForm() {
 					<span
 						className='fas fa-times-circle pull-right '
 						role='button'
-						onClick={dispatch.onCloseForm}
+						onClick={dispatch.onClose}
 					></span>
 				</h3>
 			</div>
@@ -91,7 +92,8 @@ function TaskForm() {
 							className='btn btn-danger'
 							onClick={onClear}
 						>
-							<i className='fas fa-times'></i>&nbsp; Clear
+							<i className='fas fa-times'></i>
+							&nbsp; Clear
 						</button>
 					</div>
 				</form>

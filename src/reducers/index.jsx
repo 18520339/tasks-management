@@ -6,6 +6,9 @@
 import React, { createContext, useReducer } from 'react';
 import tasks from './tasks';
 import taskEdited from './taskEdited';
+import taskFilter from './taskFilter';
+import taskSearch from './taskSearch';
+import taskSort from './taskSort';
 import isDisplayForm from './isDisplayForm';
 
 const getInitialState = reducerDict => {
@@ -30,7 +33,14 @@ const useStore = (rootReducer, state) => {
 	return useReducer(rootReducer, initialState);
 };
 
-const rootReducer = combineReducers({ tasks, taskEdited, isDisplayForm });
+const rootReducer = combineReducers({
+	tasks,
+	taskEdited,
+	taskFilter,
+	taskSearch,
+	taskSort,
+	isDisplayForm
+});
 
 export const StoreContext = createContext();
 export const Provider = props => {

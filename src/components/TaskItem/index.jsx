@@ -10,17 +10,26 @@ function TaskItem(props) {
 	const dispatch = {
 		onOpenForm: () => store.dispatch(actions.openForm()),
 		onUpdateStatus: id => store.dispatch(actions.updateStatus(id)),
-		onEditTask: task => store.dispatch(actions.editTask(task)),
-		onDeleteTask: id => store.dispatch(actions.deleteTask(id))
+		onEdit: task => store.dispatch(actions.editTask(task)),
+		onDelete: id => store.dispatch(actions.deleteTask(id))
 	};
 
 	const { index, task } = props;
-	const onUpdateStatus = () => dispatch.onUpdateStatus(task.id);
-	const onEditTask = () => {
-		dispatch.onOpenForm();
-		dispatch.onEditTask(task);
+	const onUpdateStatus = () => {
+		dispatch.onUpdateStatus(task.id);
+		var { id, name, status } = task;
+		dispatch.onEdit({ id, name, status });
 	};
-	const onDeleteTask = () => dispatch.onDeleteTask(task.id);
+
+	const onEdit = () => {
+		dispatch.onOpenForm();
+		dispatch.onEdit(task);
+	};
+
+	const onDelete = () => {
+		dispatch.onDelete(task.id);
+		dispatch.onEdit({ id: '', name: '', status: false });
+	};
 
 	return (
 		<tr>
@@ -40,22 +49,16 @@ function TaskItem(props) {
 				</h5>
 			</td>
 			<td className='text-center' nowrap='nowrap'>
-				<button
-					type='button'
-					className='btn btn-info'
-					onClick={onEditTask}
-				>
-					<i className='far fa-edit'></i>
-					&nbsp; Edit
+				<button type='button' className='btn btn-info' onClick={onEdit}>
+					<i className='far fa-edit'></i>&nbsp; Edit
 				</button>
 				&nbsp;
 				<button
 					type='button'
 					className='btn btn-danger'
-					onClick={onDeleteTask}
+					onClick={onDelete}
 				>
-					<i className='far fa-trash-alt'></i>
-					&nbsp; Delete
+					<i className='far fa-trash-alt'></i>&nbsp; Delete
 				</button>
 			</td>
 		</tr>

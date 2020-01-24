@@ -1,15 +1,21 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StoreContext } from '../../reducers';
+import * as actions from '../../actions';
 
-function Search(props) {
+function Search() {
+	const store = useContext(StoreContext);
+	const dispatch = {
+		onSearch: keyword => store.dispatch(actions.searchTable(keyword))
+	};
+
 	const [keyword, setKeyword] = useState('');
-
-	const onSearch = () => props.onSearch(keyword);
+	const onSearch = () => dispatch.onSearch(keyword.toLowerCase().trim());
 	const onChange = event => {
 		var target = event.target;
-		var value = target.value.toLowerCase();
+		var value = target.value;
 		setKeyword(value);
 	};
 

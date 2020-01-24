@@ -11,13 +11,13 @@ const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
 const tasks = (state = initialState, action) => {
 	switch (action.type) {
 		case types.SUBMIT_FORM:
-			const { id, name, status } = action.task;
-			const task = { id, name, status };
+			const { task } = action;
+			task.name = task.name.trim();
 			if (!task.id) {
 				task.id = generateId();
 				state.push(task);
 			} else {
-				var index = state.findIndex(task => task.id == id);
+				var index = state.findIndex(item => item.id == task.id);
 				state[index] = task;
 			}
 			localStorage.setItem('tasks', JSON.stringify(state));
@@ -33,7 +33,6 @@ const tasks = (state = initialState, action) => {
 			var index = state.findIndex(task => task.id == action.id);
 			if (index != -1) {
 				state.splice(index, 1);
-				//setTaskEdited(null);
 				localStorage.setItem('tasks', JSON.stringify(state));
 			}
 			return state;

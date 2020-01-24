@@ -19,6 +19,10 @@ export const submitForm = task => {
 	return { type: types.SUBMIT_FORM, task };
 };
 
+export const updateStatus = id => {
+	return { type: types.UPDATE_STATUS, id };
+};
+
 export const editTask = task => {
 	return { type: types.EDIT_TASK, task };
 };
@@ -27,8 +31,16 @@ export const deleteTask = id => {
 	return { type: types.DELETE_TASK, id };
 };
 
-export const updateStatus = id => {
-	return { type: types.UPDATE_STATUS, id };
+export const filterTable = filter => {
+	return { type: types.FILTER_TABLE, filter };
+};
+
+export const searchTable = keyword => {
+	return { type: types.SEARCH_TABLE, keyword };
+};
+
+export const sortTable = c => {
+	return { type: types.SORT_TABLE, filter };
 };
 
 /* eslint-enable */

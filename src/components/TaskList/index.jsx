@@ -1,26 +1,29 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { StoreContext } from '../../reducers';
+import * as actions from '../../actions';
 import TaskItem from '../TaskItem';
 
-function TaskList(props) {
+function TaskList() {
 	const store = useContext(StoreContext);
-	const { tasks } = store.state;
-
-	const { keyword, sort } = props;
-	const [filter, setFilter] = useState({ name: '', status: -1 });
+	const { tasks, taskFilter, taskSearch } = store.state;
+	const dispatch = {
+		onFilter: filter => store.dispatch(actions.filterTable(filter))
+	};
 
 	const onChange = event => {
 		var target = event.target;
 		var field = target.name;
 		var value = target.value;
-		value = field == 'status' ? +value : value.toLowerCase();
-		setFilter({ ...filter, [field]: value });
+		value = field == 'status' ? +value : value;
+		dispatch.onFilter({ ...taskFilter, [field]: value });
 	};
 
-	useEffect(() => setFilter({ ...filter, name: keyword }), [keyword]);
+	useEffect(() => {
+		dispatch.onFilter({ ...taskFilter, name: taskSearch });
+	}, [taskSearch]);
 
 	return (
 		<table className='table table-striped table-bordered table-hover'>
@@ -42,7 +45,7 @@ function TaskList(props) {
 							type='text'
 							name='name'
 							className='form-control'
-							value={filter.name}
+							value={taskFilter.name}
 							onChange={onChange}
 						/>
 					</td>
@@ -50,7 +53,7 @@ function TaskList(props) {
 						<select
 							name='status'
 							className='form-control'
-							value={filter.status}
+							value={taskFilter.status}
 							onChange={onChange}
 						>
 							<option value='-1'>All</option>
@@ -66,15 +69,15 @@ function TaskList(props) {
 					</td>
 				</tr>
 				{tasks
-					// .filter(task => {
-					// 	return (
-					// 		task.name.toLowerCase().indexOf(filter.name) != -1
-					// 	);
-					// })
-					// .filter(task => {
-					// 	if (filter.status == -1) return task;
-					// 	return task.status == Boolean(filter.status);
-					// })
+					.filter(task => {
+						var taskName = task.name.toLowerCase();
+						var filterName = taskFilter.name.toLowerCase().trim();
+						return taskName.indexOf(filterName) != -1;
+					})
+					.filter(task => {
+						if (taskFilter.status == -1) return task;
+						return task.status == Boolean(taskFilter.status);
+					})
 					// .sort((a, b) => {
 					// 	if (sort.by == 'name') {
 					// 		if (a.name > b.name) return sort.value;
@@ -86,7 +89,8 @@ function TaskList(props) {
 					// 		else return 0;
 					// 	}
 					// })
-					.map((task, index) => {
+					.map((task, taskIndex) => {
+						var index = tasks.findIndex(item => item.id == task.id);
 						return (
 							<TaskItem key={task.id} index={index} task={task} />
 						);
