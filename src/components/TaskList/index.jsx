@@ -1,14 +1,14 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 import TaskItem from '../TaskItem';
 
 function TaskList() {
 	const store = useContext(StoreContext);
-	const { tasks, taskFilter, taskSearch, taskSort } = store.state;
+	const { tasks, taskFilter, taskSort } = store.state;
 	const dispatch = {
 		onFilter: filter => store.dispatch(actions.filterTable(filter))
 	};
@@ -20,10 +20,6 @@ function TaskList() {
 		value = field == 'status' ? +value : value;
 		dispatch.onFilter({ ...taskFilter, [field]: value });
 	};
-
-	useEffect(() => {
-		dispatch.onFilter({ ...taskFilter, name: taskSearch });
-	}, [taskSearch]);
 
 	return (
 		<table className='table table-striped table-bordered table-hover'>
@@ -70,8 +66,10 @@ function TaskList() {
 				</tr>
 				{tasks
 					.filter(task => {
-						var taskName = task.name ? task.name.toLowerCase() : '';
-						var filterName = taskFilter.name.toLowerCase().trim();
+						var taskName = task.name;
+						var filterName = taskFilter.name;
+						taskName = taskName ? taskName.toLowerCase() : '';
+						filterName = filterName ? filterName.toLowerCase() : '';
 						return taskName.indexOf(filterName) != -1;
 					})
 					.filter(task => {

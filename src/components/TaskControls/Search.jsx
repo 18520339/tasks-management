@@ -1,23 +1,33 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
 function Search() {
 	const store = useContext(StoreContext);
+	const { taskFilter, taskSearch } = store.state;
 	const dispatch = {
-		onSearch: keyword => store.dispatch(actions.searchTable(keyword))
+		onSearch: keyword => store.dispatch(actions.searchTable(keyword)),
+		onFilter: filter => store.dispatch(actions.filterTable(filter))
 	};
 
 	const [keyword, setKeyword] = useState('');
-	const onSearch = () => dispatch.onSearch(keyword.toLowerCase().trim());
+
+	const onSearch = () => {
+		dispatch.onFilter({ ...taskFilter, name: taskSearch });
+	};
+
 	const onChange = event => {
 		var target = event.target;
 		var value = target.value;
 		setKeyword(value);
 	};
+
+	useEffect(() => {
+		dispatch.onSearch(keyword.toLowerCase().trim());
+	}, [keyword]);
 
 	return (
 		<div className='input-group'>

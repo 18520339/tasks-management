@@ -1,7 +1,7 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StoreContext } from './reducers';
 import * as actions from './actions';
 import * as common from './common';
