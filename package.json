@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "cra-template": "1.0.0",
+        "gh-pages": "^2.2.0",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
         "react-scripts": "3.3.0"
@@ -13,8 +14,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "predeploy": "yarn build",
-        "deploy": "gh-pages -d build"
+        "predeploy": "yarn run build",
+        "deploy": "gh-pages -b replace-Redux-with-Hooks -d build"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -31,8 +32,5 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "http://quankun.github.io/tasks-app",
-    "devDependencies": {
-        "gh-pages": "^2.2.0"
-    }
+    "homepage": "http://18520339.github.io/tasks-app"
 }
