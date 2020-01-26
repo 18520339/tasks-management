@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/tasks-app/static/js/main.6806d9a7.chunk.js",
+    "main.js.map": "/tasks-app/static/js/main.6806d9a7.chunk.js.map",
+    "runtime-main.js": "/tasks-app/static/js/runtime-main.37ada4fd.js",
+    "runtime-main.js.map": "/tasks-app/static/js/runtime-main.37ada4fd.js.map",
+    "static/js/2.2947cf97.chunk.js": "/tasks-app/static/js/2.2947cf97.chunk.js",
+    "static/js/2.2947cf97.chunk.js.map": "/tasks-app/static/js/2.2947cf97.chunk.js.map",
+    "index.html": "/tasks-app/index.html",
+    "precache-manifest.f4c57e038f56cc5865fc9368cc6cfc16.js": "/tasks-app/precache-manifest.f4c57e038f56cc5865fc9368cc6cfc16.js",
+    "service-worker.js": "/tasks-app/service-worker.js",
+    "static/js/2.2947cf97.chunk.js.LICENSE": "/tasks-app/static/js/2.2947cf97.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.37ada4fd.js",
+    "static/js/2.2947cf97.chunk.js",
+    "static/js/main.6806d9a7.chunk.js"
+  ]
+}
