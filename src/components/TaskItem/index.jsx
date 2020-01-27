@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
@@ -64,6 +65,14 @@ function TaskItem(props) {
 		</tr>
 	);
 }
+
+TaskItem.propTypes = {
+	task: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		status: PropTypes.bool.isRequired
+	}).isRequired
+};
 
 export default TaskItem;
 

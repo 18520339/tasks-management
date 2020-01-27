@@ -87,11 +87,9 @@ function TaskList() {
 							else return 0;
 						}
 					})
-					.map((task, index) => {
-						return (
-							<TaskItem key={task.id} index={index} task={task} />
-						);
-					})}
+					.map((task, index) => (
+						<TaskItem key={task.id} index={index} task={task} />
+					))}
 			</tbody>
 		</table>
 	);
