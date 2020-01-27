@@ -1,4 +1,4 @@
-# Tasks Management version 2
+# Tasks Management No.2
 > **Demo: http://tasksmanagement2.herokuapp.com/**
 
 ## Libraries & Technique Used:
@@ -12,6 +12,7 @@
 ```
 git clone https://github.com/18520339/Tasks-Management.git
 cd Tasks-Management
+git checkout replace-Redux-with-Hooks
 npm install
 npm start
 ```
