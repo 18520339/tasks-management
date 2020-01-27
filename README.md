@@ -1,5 +1,5 @@
 # Tasks Management No.2
-> **Demo: http://tasksmanagement2.herokuapp.com/**
+> Final Project Front-end 13 ([**Kmin Academy**](https://kmin.edu.vn))
 
 ## Libraries & Technique Used:
 1. Bootstrap 3
