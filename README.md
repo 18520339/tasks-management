@@ -1,5 +1,5 @@
 # Tasks Management No.1
-> **Demo: http://tasksmanagement1.herokuapp.com/**
+> **Demo: http://tasksmanagement.herokuapp.com/**
 
 ## Libraries & Technique Used:
 1. Bootstrap 3
