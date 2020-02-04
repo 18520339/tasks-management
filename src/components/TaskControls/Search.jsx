@@ -1,22 +1,17 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect, useContext } from 'react';
-import { StoreContext } from '../../reducers';
-import * as actions from '../../actions';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterTable, searchTable } from '../../actions';
 
-function Search() {
-	const store = useContext(StoreContext);
-	const { taskFilter, taskSearch } = store.state;
-	const dispatch = {
-		onSearch: keyword => store.dispatch(actions.searchTable(keyword)),
-		onFilter: filter => store.dispatch(actions.filterTable(filter))
-	};
-
+export default function Search() {
+	const { taskFilter, taskSearch } = useSelector(state => state);
+	const dispatch = useDispatch();
 	const [keyword, setKeyword] = useState('');
 
 	const onSearch = () => {
-		dispatch.onFilter({ ...taskFilter, name: taskSearch });
+		dispatch(filterTable({ ...taskFilter, name: taskSearch }));
 	};
 
 	const onChange = event => {
@@ -26,7 +21,7 @@ function Search() {
 	};
 
 	useEffect(() => {
-		dispatch.onSearch(keyword.toLowerCase().trim());
+		dispatch(searchTable(keyword.toLowerCase().trim()));
 	}, [keyword]);
 
 	return (
@@ -37,7 +32,7 @@ function Search() {
 				className='form-control'
 				value={keyword}
 				onChange={onChange}
-				placeholder='Type to search ...'
+				placeholder='Type to search...'
 			/>
 			<span className='input-group-btn'>
 				<button
@@ -51,7 +46,5 @@ function Search() {
 		</div>
 	);
 }
-
-export default Search;
 
 /* eslint-enable */

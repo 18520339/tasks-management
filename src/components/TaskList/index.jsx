@@ -1,24 +1,21 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useContext } from 'react';
-import { StoreContext } from '../../reducers';
-import * as actions from '../../actions';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterTable } from '../../actions';
 import TaskItem from '../TaskItem';
 
-function TaskList() {
-	const store = useContext(StoreContext);
-	const { tasks, taskFilter, taskSort } = store.state;
-	const dispatch = {
-		onFilter: filter => store.dispatch(actions.filterTable(filter))
-	};
+export default function TaskList() {
+	const { tasks, taskFilter, taskSort } = useSelector(state => state);
+	const dispatch = useDispatch();
 
 	const onChange = event => {
 		var target = event.target;
 		var field = target.name;
 		var value = target.value;
 		value = field == 'status' ? +value : value;
-		dispatch.onFilter({ ...taskFilter, [field]: value });
+		dispatch(filterTable({ ...taskFilter, [field]: value }));
 	};
 
 	return (
@@ -94,7 +91,5 @@ function TaskList() {
 		</table>
 	);
 }
-
-export default TaskList;
 
 /* eslint-enable */

@@ -1,16 +1,13 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useContext } from 'react';
-import { StoreContext } from '../../reducers';
-import * as actions from '../../actions';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { sortTable } from '../../actions';
 
-function Sort() {
-	const store = useContext(StoreContext);
-	const { taskSort } = store.state;
-	const dispatch = {
-		onSort: (by, value) => store.dispatch(actions.sortTable(by, value))
-	};
+export default function Sort() {
+	const { taskSort } = useSelector(state => state);
+	const dispatch = useDispatch();
 
 	return (
 		<div className='dropdown'>
@@ -23,7 +20,7 @@ function Sort() {
 				Sort by &nbsp;<i className='far fa-caret-square-down'></i>
 			</button>
 			<ul className='dropdown-menu' aria-labelledby='sortMenu'>
-				<li onClick={() => dispatch.onSort('name', 1)}>
+				<li onClick={() => dispatch(sortTable('name', 1))}>
 					<a role='button'>
 						<i className='fas fa-sort-alpha-down'>
 							&emsp; A - Z &emsp;
@@ -33,7 +30,7 @@ function Sort() {
 						)}
 					</a>
 				</li>
-				<li onClick={() => dispatch.onSort('name', -1)}>
+				<li onClick={() => dispatch(sortTable('name', -1))}>
 					<a role='button'>
 						<i className='fas fa-sort-alpha-down-alt'>
 							&emsp; Z - A &emsp;
@@ -44,7 +41,7 @@ function Sort() {
 					</a>
 				</li>
 				<li role='separator' className='divider'></li>
-				<li onClick={() => dispatch.onSort('status', 1)}>
+				<li onClick={() => dispatch(sortTable('status', 1))}>
 					<a role='button'>
 						Finished &emsp;
 						{taskSort.by == 'status' && taskSort.value == 1 && (
@@ -52,7 +49,7 @@ function Sort() {
 						)}
 					</a>
 				</li>
-				<li onClick={() => dispatch.onSort('status', -1)}>
+				<li onClick={() => dispatch(sortTable('status', -1))}>
 					<a role='button'>
 						Unfinished &emsp;
 						{taskSort.by == 'status' && taskSort.value == -1 && (
@@ -64,7 +61,5 @@ function Sort() {
 		</div>
 	);
 }
-
-export default Sort;
 
 /* eslint-enable */

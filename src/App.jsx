@@ -1,44 +1,39 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useContext } from 'react';
-import { StoreContext } from './reducers';
-import * as actions from './actions';
-import * as common from './common';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { openForm, toggleForm, editTask, randomTasks } from './actions';
+import { generateId } from './utils';
 
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import { SearchCtrl, SortCtrl } from './components/TaskControls';
 
-function App() {
-	const store = useContext(StoreContext);
-	const { tasks, taskEdited, isDisplayForm } = store.state;
-	const dispatch = {
-		onOpenForm: () => store.dispatch(actions.openForm()),
-		onToggleForm: () => store.dispatch(actions.toggleForm()),
-		onRandomTasks: tasks => store.dispatch(actions.randomTasks(tasks)),
-		onEditTask: task => store.dispatch(actions.editTask(task))
-	};
+export default function App() {
+	const { tasks, taskEdited, isDisplayForm } = useSelector(state => state);
+	const dispatch = useDispatch();
 
 	const onToggleForm = () => {
-		if (taskEdited && taskEdited.id != '') dispatch.onOpenForm();
-		else dispatch.onToggleForm();
-		dispatch.onEditTask({ id: '', name: '', status: false });
+		if (taskEdited && taskEdited.id != '') dispatch(openForm());
+		else dispatch(toggleForm());
+		dispatch(editTask({ id: '', name: '', status: false }));
 	};
 
 	const onGenerateTasks = () => {
 		var randomTasks = [
-			{ id: common.generateId(), name: '1 vợ', status: true },
-			{ id: common.generateId(), name: '2 con', status: false },
-			{ id: common.generateId(), name: '3 lầu', status: false },
-			{ id: common.generateId(), name: '4 bánh', status: true },
-			{ id: common.generateId(), name: '5 sao', status: false },
-			{ id: common.generateId(), name: '6 số', status: true }
+			{ id: generateId(), name: '1 vợ', status: true },
+			{ id: generateId(), name: '2 con', status: false },
+			{ id: generateId(), name: '3 lầu', status: false },
+			{ id: generateId(), name: '4 bánh', status: true },
+			{ id: generateId(), name: '5 sao', status: false },
+			{ id: generateId(), name: '6 số', status: true }
 		];
-		dispatch.onRandomTasks([...tasks, ...randomTasks]);
+		dispatch(randomTasks([...tasks, ...randomTasks]));
 	};
 
-	const onDeleteAllTasks = () => dispatch.onRandomTasks([]);
+	const onDeleteAllTasks = () => dispatch(randomTasks([]));
 
 	return (
 		<div className='container'>
@@ -108,7 +103,5 @@ function App() {
 		</div>
 	);
 }
-
-export default App;
 
 /* eslint-enable */

@@ -1,35 +1,29 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateStatus, editTask, openForm } from '../../actions';
 import PropTypes from 'prop-types';
-import { StoreContext } from '../../reducers';
-import * as actions from '../../actions';
 
-function TaskItem(props) {
-	const store = useContext(StoreContext);
-	const dispatch = {
-		onOpenForm: () => store.dispatch(actions.openForm()),
-		onUpdateStatus: id => store.dispatch(actions.updateStatus(id)),
-		onEdit: task => store.dispatch(actions.editTask(task)),
-		onDelete: id => store.dispatch(actions.deleteTask(id))
-	};
+export default function TaskItem(props) {
+	const dispatch = useDispatch();
 
 	const { index, task } = props;
 	const onUpdateStatus = () => {
-		dispatch.onUpdateStatus(task.id);
+		dispatch(updateStatus(task.id));
 		var { id, name, status } = task;
-		dispatch.onEdit({ id, name, status });
+		dispatch(editTask({ id, name, status }));
 	};
 
 	const onEdit = () => {
-		dispatch.onOpenForm();
-		dispatch.onEdit(task);
+		dispatch(openForm());
+		dispatch(editTask(task));
 	};
 
 	const onDelete = () => {
-		dispatch.onDelete(task.id);
-		dispatch.onEdit({ id: '', name: '', status: false });
+		dispatch(deleteTask(task.id));
+		dispatch(editTask({ id: '', name: '', status: false }));
 	};
 
 	return (
@@ -73,7 +67,5 @@ TaskItem.propTypes = {
 		status: PropTypes.bool.isRequired
 	}).isRequired
 };
-
-export default TaskItem;
 
 /* eslint-enable */

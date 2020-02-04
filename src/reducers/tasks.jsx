@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import * as types from '../constants';
-import * as common from '../common';
+import { generateId } from '../utils';
 
 const tasksInCookies = localStorage.getItem('tasks');
 const initialState = tasksInCookies ? JSON.parse(tasksInCookies) : [];
@@ -12,7 +12,7 @@ const tasks = (state = initialState, action) => {
 			const { task } = action;
 			task.name = task.name.trim();
 			if (!task.id) {
-				task.id = common.generateId();
+				task.id = generateId();
 				state.push(task);
 			} else {
 				var index = state.findIndex(item => item.id == task.id);

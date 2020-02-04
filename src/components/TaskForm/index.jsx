@@ -1,20 +1,16 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { useState, useEffect, useContext } from 'react';
-import { StoreContext } from '../../reducers';
-import * as actions from '../../actions';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { editTask, submitForm, closeForm } from '../../actions';
 
-function TaskForm() {
-	const store = useContext(StoreContext);
-	const { taskEdited, isDisplayForm } = store.state;
-	const dispatch = {
-		onSubmit: task => store.dispatch(actions.submitForm(task)),
-		onClose: () => store.dispatch(actions.closeForm()),
-		onEdit: task => store.dispatch(actions.editTask(task))
-	};
-
+export default function TaskForm() {
+	const { taskEdited, isDisplayForm } = useSelector(state => state);
+	const dispatch = useDispatch();
 	const [task, setTask] = useState({ id: '', name: '', status: false });
+
+	const onClose = () => dispatch(closeForm());
 	const onClear = () => setTask({ ...task, name: '', status: false });
 
 	const onChange = event => {
@@ -28,8 +24,8 @@ function TaskForm() {
 	const onSubmit = event => {
 		event.preventDefault();
 		if (task.name.trim()) {
-			dispatch.onSubmit(task);
-			dispatch.onEdit({ id: '', name: '', status: false });
+			dispatch(submitForm(task));
+			dispatch(editTask({ id: '', name: '', status: false }));
 			onClear();
 		}
 	};
@@ -50,7 +46,7 @@ function TaskForm() {
 					<span
 						className='fas fa-times-circle pull-right '
 						role='button'
-						onClick={dispatch.onClose}
+						onClick={onClose}
 					></span>
 				</h3>
 			</div>
@@ -106,7 +102,5 @@ function TaskForm() {
 		</div>
 	);
 }
-
-export default TaskForm;
 
 /* eslint-enable */

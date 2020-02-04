@@ -24,4 +24,4 @@ npm start
 
 -   [Reactjs redux tutorial by nghiepuit](https://www.youtube.com/playlist?list=PLJ5qtRQovuEOoKffoCBzTfvzMTTORnoyp)
 -   [React Hooks Tutorial by Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwisvxhZ135pogtX7_Oe3Q3A)
--   [React Context & Hooks Tutorial by The Net Ninja](https://www.youtube.com/playlist?list=PL4cUxeGkcC9hNokByJilPg5g9m2APUePI)
+-   [Hooks - React Redux documentation](https://react-redux.js.org/next/api/hooks)

@@ -1,14 +1,17 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+import store from './reducers';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from './reducers';
 
 ReactDOM.render(
-	<Provider>
+	<Provider store={store}>
 		<App />
 	</Provider>,
 	document.getElementById('root')
