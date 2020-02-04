@@ -55,7 +55,7 @@ function App() {
 	const generateId = () => [randomId(), randomId(), randomId()].join('-');
 
 	const onGenerateTasks = () => {
-		var randomTasks = [
+		var sampleTasks = [
 			{ id: generateId(), name: '1 vợ', status: true },
 			{ id: generateId(), name: '2 con', status: false },
 			{ id: generateId(), name: '3 lầu', status: false },
@@ -63,7 +63,7 @@ function App() {
 			{ id: generateId(), name: '5 sao', status: false },
 			{ id: generateId(), name: '6 số', status: true }
 		];
-		saveTasks([...tasks, ...randomTasks]);
+		saveTasks([...tasks, ...sampleTasks]);
 	};
 	const onDeleteAllTasks = () => saveTasks([]);
 
