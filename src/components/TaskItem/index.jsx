@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { updateStatus, editTask, openForm } from '../../actions';
+import { updateStatus, editTask, deleteTask, openForm } from '../../actions';
 import PropTypes from 'prop-types';
 
 export default function TaskItem(props) {
