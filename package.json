@@ -17,7 +17,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "predeploy": "yarn run build",
-        "deploy": "gh-pages -b replace-Redux-with-Hooks -d build"
+        "deploy": "gh-pages -b using-Hooks-API-in-Redux -d build"
     },
     "eslintConfig": {
         "extends": "react-app"
