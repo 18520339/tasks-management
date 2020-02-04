@@ -6,7 +6,7 @@ import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 import TaskItem from '../TaskItem';
 
-function TaskList() {
+export default function TaskList() {
 	const store = useContext(StoreContext);
 	const { tasks, taskFilter, taskSort } = store.state;
 	const dispatch = {
@@ -94,7 +94,5 @@ function TaskList() {
 		</table>
 	);
 }
-
-export default TaskList;
 
 /* eslint-enable */

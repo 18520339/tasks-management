@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
-function TaskItem(props) {
+export default function TaskItem(props) {
 	const store = useContext(StoreContext);
 	const dispatch = {
 		onOpenForm: () => store.dispatch(actions.openForm()),
@@ -73,7 +73,5 @@ TaskItem.propTypes = {
 		status: PropTypes.bool.isRequired
 	}).isRequired
 };
-
-export default TaskItem;
 
 /* eslint-enable */

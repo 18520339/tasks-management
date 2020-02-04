@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
-function TaskForm() {
+export default function TaskForm() {
 	const store = useContext(StoreContext);
 	const { taskEdited, isDisplayForm } = store.state;
 	const dispatch = {
@@ -106,7 +106,5 @@ function TaskForm() {
 		</div>
 	);
 }
-
-export default TaskForm;
 
 /* eslint-enable */

@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
-function Search() {
+export default function Search() {
 	const store = useContext(StoreContext);
 	const { taskFilter, taskSearch } = store.state;
 	const dispatch = {
@@ -51,7 +51,5 @@ function Search() {
 		</div>
 	);
 }
-
-export default Search;
 
 /* eslint-enable */

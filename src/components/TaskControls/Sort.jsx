@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { StoreContext } from '../../reducers';
 import * as actions from '../../actions';
 
-function Sort() {
+export default function Sort() {
 	const store = useContext(StoreContext);
 	const { taskSort } = store.state;
 	const dispatch = {
@@ -64,7 +64,5 @@ function Sort() {
 		</div>
 	);
 }
-
-export default Sort;
 
 /* eslint-enable */

@@ -4,13 +4,13 @@
 import React, { useContext } from 'react';
 import { StoreContext } from './reducers';
 import * as actions from './actions';
-import * as common from './common';
+import { generateId } from './utils';
 
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import { SearchCtrl, SortCtrl } from './components/TaskControls';
 
-function App() {
+export default function App() {
 	const store = useContext(StoreContext);
 	const { tasks, taskEdited, isDisplayForm } = store.state;
 	const dispatch = {
@@ -28,12 +28,12 @@ function App() {
 
 	const onGenerateTasks = () => {
 		var randomTasks = [
-			{ id: common.generateId(), name: '1 vợ', status: true },
-			{ id: common.generateId(), name: '2 con', status: false },
-			{ id: common.generateId(), name: '3 lầu', status: false },
-			{ id: common.generateId(), name: '4 bánh', status: true },
-			{ id: common.generateId(), name: '5 sao', status: false },
-			{ id: common.generateId(), name: '6 số', status: true }
+			{ id: generateId(), name: '1 vợ', status: true },
+			{ id: generateId(), name: '2 con', status: false },
+			{ id: generateId(), name: '3 lầu', status: false },
+			{ id: generateId(), name: '4 bánh', status: true },
+			{ id: generateId(), name: '5 sao', status: false },
+			{ id: generateId(), name: '6 số', status: true }
 		];
 		dispatch.onRandomTasks([...tasks, ...randomTasks]);
 	};
@@ -108,7 +108,5 @@ function App() {
 		</div>
 	);
 }
-
-export default App;
 
 /* eslint-enable */
