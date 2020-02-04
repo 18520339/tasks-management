@@ -10,7 +10,7 @@
 
 ## Usage:
 ```
-git clone https://github.com/18520339/Tasks-Management.git
+git clone https://github.com/18520339/tasks-management.git
 cd Tasks-Management
 git checkout replace-Redux-with-Hooks
 npm install
