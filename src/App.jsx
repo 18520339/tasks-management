@@ -27,7 +27,7 @@ export default function App() {
 	};
 
 	const onGenerateTasks = () => {
-		var randomTasks = [
+		var sampleTasks = [
 			{ id: generateId(), name: '1 vợ', status: true },
 			{ id: generateId(), name: '2 con', status: false },
 			{ id: generateId(), name: '3 lầu', status: false },
@@ -35,7 +35,7 @@ export default function App() {
 			{ id: generateId(), name: '5 sao', status: false },
 			{ id: generateId(), name: '6 số', status: true }
 		];
-		dispatch.onRandomTasks([...tasks, ...randomTasks]);
+		dispatch.onRandomTasks([...tasks, ...sampleTasks]);
 	};
 
 	const onDeleteAllTasks = () => dispatch.onRandomTasks([]);
