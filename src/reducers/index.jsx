@@ -1,7 +1,6 @@
 /* jshint esversion: 9 */
 /* eslint-disable */
 
-// Reference: https://gist.github.com/thchia/dd1bc8200fd8cff89cfa6c928983e5c4
 import { combineReducers, createStore } from 'redux';
 
 import tasks from './tasks';
