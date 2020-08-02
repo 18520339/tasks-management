@@ -16,8 +16,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "predeploy": "yarn run build",
-        "deploy": "gh-pages -b using-Hooks-API-in-Redux -d build"
+        "predeploy": "yarn run build"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -33,6 +32,5 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "homepage": "http://18520339.github.io/tasks-app"
+    }
 }
