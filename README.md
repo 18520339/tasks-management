@@ -9,8 +9,7 @@
 ## Usage:
 ```
 git clone https://github.com/18520339/tasks-management.git
-cd Tasks-Management
-git checkout master
+cd tasks-management
 npm install
 npm start
 ```
